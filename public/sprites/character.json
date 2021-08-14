@@ -1,0 +1,230 @@
+{
+	"textures": [
+		{
+			"image": "character.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 800,
+				"h": 80
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "idle1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkdown1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 80,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkdown2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 160,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkleft1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 240,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkleft2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 320,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkright1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 400,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkright2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 480,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkup1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 560,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkup2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 640,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				},
+				{
+					"filename": "walkup3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					},
+					"frame": {
+						"x": 720,
+						"y": 0,
+						"w": 80,
+						"h": 80
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:d423b10e77da378a4e3947491acaea3d:ba48d67080bb27e91ae88014c80cc0b6:42e475aa4a03af306bdc7acb5ff91d19$"
+	}
+}

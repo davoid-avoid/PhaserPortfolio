@@ -10,11 +10,9 @@ const toKey = (x: number, y: number) => `${x}x${y}`;
 const findPath = (
   start: Phaser.Math.Vector2,
   target: Phaser.Math.Vector2,
-  groundLayer: Phaser.Tilemaps.StaticTilemapLayer,
-  wallsLayer: Phaser.Tilemaps.StaticTilemapLayer
+  groundLayer: Phaser.Tilemaps.StaticTilemapLayer
 ) => {
   // no path if select invalid tile
-  console.log(groundLayer.getTileAt(target.x, target.y));
   if (!groundLayer.getTileAt(target.x, target.y)) {
     return [];
   }
@@ -33,12 +31,15 @@ const findPath = (
   const startKey = toKey(start.x, start.y);
   const targetKey = toKey(target.x, target.y);
 
+  console.log(startKey, targetKey)
+
   parentForKey[startKey] = {
     key: "",
     position: { x: -1, y: -1 },
   };
 
   queue.push(start);
+
 
   while (queue.length > 0) {
     const { x, y } = queue.shift()!;
@@ -55,6 +56,7 @@ const findPath = (
       { x: x - 1, y }, // left
     ];
 
+
     for (let i = 0; i < neighbors.length; ++i) {
       const neighbor = neighbors[i];
       const tile = groundLayer.getTileAt(neighbor.x, neighbor.y);
@@ -63,7 +65,7 @@ const findPath = (
         continue;
       }
 
-      if (wallsLayer.getTileAt(neighbor.x, neighbor.y)) {
+      if (groundLayer.getTileAt(neighbor.x, neighbor.y).collides === true) {
         continue;
       }
 
@@ -82,24 +84,38 @@ const findPath = (
     }
   }
 
+
   const path: Phaser.Math.Vector2[] = [];
 
   let currentKey = targetKey;
-  let currentPos = parentForKey[targetKey].position;
+  let currentPos;
+  if (typeof parentForKey[targetKey] !== 'undefined'){
+    currentPos = parentForKey[targetKey].position;
 
-  while (currentKey !== startKey) {
-    const pos = groundLayer.tileToWorldXY(currentPos.x, currentPos.y);
-    pos.x += groundLayer.tilemap.tileWidth * 0.5;
-    pos.y += groundLayer.tilemap.tileHeight * 0.5;
+    while (currentKey !== startKey) {
+      const pos = groundLayer.tileToWorldXY(currentPos.x, currentPos.y);
+      pos.x += groundLayer.tilemap.tileWidth * 0.5;
+      pos.y += groundLayer.tilemap.tileHeight * 0.5;
+  
+      path.push(pos);
+  
+      const { key, position } = parentForKey[currentKey];
+      currentKey = key;
+      currentPos = position;
+    }
 
-    path.push(pos);
-
-    const { key, position } = parentForKey[currentKey];
-    currentKey = key;
-    currentPos = position;
+    if (currentKey === startKey){
+      let pos = groundLayer.tileToWorldXY(target.x, target.y)
+      pos.x += groundLayer.tilemap.tileWidth * 0.5;
+      pos.y += groundLayer.tilemap.tileHeight * 0.5;
+      path.unshift(pos);
+    }
+    //console.log(path.reverse())
+    console.log(path)
+    return path.reverse();
+  } else {
+    return []
   }
-
-  return path.reverse();
 };
 
 export default findPath;

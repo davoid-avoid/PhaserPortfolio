@@ -1,7 +1,8 @@
 import Phaser, { Display } from "phaser";
 import { debugDraw } from "../utils/debugCollide";
 import { createCharacterAnims } from "../entities/characterAnims";
-import AnimatedTiles from '../utils/AnimatedTiles.js'
+import AnimatedTiles from "../utils/AnimatedTiles.js";
+import findPath from '../utils/findPath'
 
 import "../entities/character";
 
@@ -55,7 +56,6 @@ export default class Portfolio extends Phaser.Scene {
     //draw the tree top layer
     map.createStaticLayer("TreeTops", tileset);
 
-        
     //initialize animations
     this.animatedTiles.init(map);
 
@@ -76,11 +76,13 @@ export default class Portfolio extends Phaser.Scene {
         );
         const targetVec = groundLayer.worldToTileXY(worldX, worldY);
 
-        // use startVec and targetVec
+        // generate the path
+        const path = findPath(startVec, targetVec, groundLayer);
+
+        // give it to the player to use
+        this.character.moveAlong(path);
       }
     );
-
-    console.log(groundLayer);
   }
 
   update(t: number, dt: number) {

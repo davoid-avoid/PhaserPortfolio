@@ -21,29 +21,102 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.anims.play("character-idle");
   }
 
-  update(cursors: Phaser.Types.Input.Keyboard.CursorKeys){
+  private movePath: Phaser.Math.Vector2[] = [];
+  private moveToTarget?: Phaser.Math.Vector2;
+
+  moveAlong(path: Phaser.Math.Vector2[]) {
+    if (!path || path.length <= 0) {
+      return;
+    }
+
+    this.movePath = path;
+    this.moveTo(this.movePath.shift()!);
+  }
+
+  moveTo(target: Phaser.Math.Vector2) {
+    this.moveToTarget = target;
+  }
+
+  update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
     if (!cursors) {
-        return;
-      }
-  
-      const speed = 120;
-  
+      return;
+    }
+
+    const speed = 120;
+
+    //if any cursor key is down, interrupt pathfinding movement
+    if (
+      cursors.left?.isDown ||
+      cursors.right?.isDown ||
+      cursors.up?.isDown ||
+      cursors.down?.isDown
+    ) {
       if (cursors.left?.isDown) {
         this.anims.play("character-walk-left", true);
         this.setVelocity(-speed, 0);
+        this.moveToTarget = undefined;
       } else if (cursors.right?.isDown) {
         this.anims.play("character-walk-right", true);
         this.setVelocity(speed, 0);
+        this.moveToTarget = undefined;
       } else if (cursors.down?.isDown) {
         this.anims.play("character-walk-down", true);
         this.setVelocity(0, speed);
+        this.moveToTarget = undefined;
       } else if (cursors.up?.isDown) {
+        this.anims.play("character-walk-up", true);
+        this.setVelocity(0, -speed);
+        this.moveToTarget = undefined;
+      }
+    } else {
+      let dx = 0;
+      let dy = 0;
+
+      if (this.moveToTarget) {
+        dx = this.moveToTarget.x - this.x;
+        dy = this.moveToTarget.y - this.y;
+
+        if (Math.abs(dx) < 5) {
+          dx = 0;
+        }
+        if (Math.abs(dy) < 5) {
+          dy = 0;
+        }
+
+        if (dx === 0 && dy === 0) {
+          if (this.movePath.length > 0) {
+            this.moveTo(this.movePath.shift()!);
+            return;
+          }
+
+          this.moveToTarget = undefined;
+        }
+      }
+
+      // this logic is the same except we determine
+      // if a key is down based on dx and dy
+      const leftDown = dx < 0;
+      const rightDown = dx > 0;
+      const upDown = dy < 0;
+      const downDown = dy > 0;
+
+      if (leftDown) {
+        this.anims.play("character-walk-left", true);
+        this.setVelocity(-speed, 0);
+      } else if (rightDown) {
+        this.anims.play("character-walk-right", true);
+        this.setVelocity(speed, 0);
+      } else if (downDown) {
+        this.anims.play("character-walk-down", true);
+        this.setVelocity(0, speed);
+      } else if (upDown) {
         this.anims.play("character-walk-up", true);
         this.setVelocity(0, -speed);
       } else {
         this.anims.play("character-idle", true);
         this.setVelocity(0, 0);
       }
+    }
   }
 }
 

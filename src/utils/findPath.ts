@@ -102,14 +102,14 @@ const findPath = (
       currentPos = position;
     }
 
+    //add the final target to the pathing list
     if (currentKey === startKey){
       let pos = groundLayer.tileToWorldXY(target.x, target.y)
       pos.x += groundLayer.tilemap.tileWidth * 0.5;
       pos.y += groundLayer.tilemap.tileHeight * 0.5;
       path.unshift(pos);
     }
-    //console.log(path.reverse())
-    console.log(path)
+
     return path.reverse();
   } else {
     return []

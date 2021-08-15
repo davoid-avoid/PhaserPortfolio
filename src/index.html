@@ -1,9 +1,37 @@
 <html>
-	<head>
-		<title>Dave Rowe - Portfolio</title>
-		<link rel="stylesheet" href="css/pagestyle.css">
-	</head>
-	<body>
-		<script src="main.ts"></script>
-	</body>
+  <head>
+    <title>Dave Rowe - Portfolio</title>
+    <link rel="stylesheet" href="css/pagestyle.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <script src="main.ts"></script>
+    <div id="modal">
+      <div id="modal-interior">
+        <span class="close" onClick="closeModal()">&times;</span>
+        <h1>Test test test</h1>
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
+          ab illo inventore veritatis et quasi architecto beatae vitae dicta
+          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
+          qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
+          dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
+          quia non numquam eius modi tempora incidunt ut labore et dolore magnam
+          aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
+          exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex
+          ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
+          ea voluptate velit esse quam nihil molestiae consequatur, vel illum
+          qui dolorem eum fugiat quo voluptas nulla pariatur?
+        </p>
+      </div>
+    </div>
+  </body>
+  <script>
+    function closeModal() {
+      let modalDOM = document.getElementById("modal");
+      modalDOM.style.display = "none";
+    }
+  </script>
 </html>

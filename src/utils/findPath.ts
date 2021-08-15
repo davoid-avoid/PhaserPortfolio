@@ -31,8 +31,6 @@ const findPath = (
   const startKey = toKey(start.x, start.y);
   const targetKey = toKey(target.x, target.y);
 
-  console.log(startKey, targetKey)
-
   parentForKey[startKey] = {
     key: "",
     position: { x: -1, y: -1 },

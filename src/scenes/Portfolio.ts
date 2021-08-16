@@ -80,7 +80,7 @@ export default class Portfolio extends Phaser.Scene {
       this.modal2.showModal()
     );
 
-    this.modal3 = this.add.arrow(320, 1850, "arrowSprite");
+    this.modal3 = this.add.arrow(280, 1850, "arrowSprite");
     this.modal3.setModal("modal3");
 
     this.physics.add.collider(

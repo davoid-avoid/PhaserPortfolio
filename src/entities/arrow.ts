@@ -31,6 +31,12 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
 
   showModal() {
     if (this.arrowDisabled === false) {
+      let modalContent = document.getElementsByClassName('modal-content')
+      Array.prototype.forEach.call(modalContent, function(el) {
+        el.style.display = "none"
+      })
+      let targetContent = document.getElementById(this.modalSet + '-content')
+      targetContent?.style.display = "inline-block";
       let modalDOM = document.getElementById("modal");
       modalDOM?.style.display = "inline-block";
       this.alpha = 0;
@@ -44,6 +50,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
     this.arrowDisabled = false;
     this.alpha = 1;
     this.body.setSize(this.width * 0.55, this.height * 0.7);
+    this.body.offset.y = 28;
   }
 
   update(character) {

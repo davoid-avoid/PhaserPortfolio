@@ -51,22 +51,25 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       cursors.up?.isDown ||
       cursors.down?.isDown
     ) {
-      if (cursors.left?.isDown) {
-        this.anims.play("character-walk-left", true);
-        this.setVelocity(-speed, 0);
-        this.moveToTarget = undefined;
-      } else if (cursors.right?.isDown) {
-        this.anims.play("character-walk-right", true);
-        this.setVelocity(speed, 0);
-        this.moveToTarget = undefined;
-      } else if (cursors.down?.isDown) {
-        this.anims.play("character-walk-down", true);
-        this.setVelocity(0, speed);
-        this.moveToTarget = undefined;
-      } else if (cursors.up?.isDown) {
-        this.anims.play("character-walk-up", true);
-        this.setVelocity(0, -speed);
-        this.moveToTarget = undefined;
+      let modal = document.getElementById("modal");
+      if (modal?.style.display !== "inline-block") {
+        if (cursors.left?.isDown) {
+          this.anims.play("character-walk-left", true);
+          this.setVelocity(-speed, 0);
+          this.moveToTarget = undefined;
+        } else if (cursors.right?.isDown) {
+          this.anims.play("character-walk-right", true);
+          this.setVelocity(speed, 0);
+          this.moveToTarget = undefined;
+        } else if (cursors.down?.isDown) {
+          this.anims.play("character-walk-down", true);
+          this.setVelocity(0, speed);
+          this.moveToTarget = undefined;
+        } else if (cursors.up?.isDown) {
+          this.anims.play("character-walk-up", true);
+          this.setVelocity(0, -speed);
+          this.moveToTarget = undefined;
+        }
       }
     } else {
       let dx = 0;

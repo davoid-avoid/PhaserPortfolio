@@ -1,7 +1,7 @@
 {
-	"name": "phaser3-parcel-template",
+	"name": "island-portfolio",
 	"version": "1.0.0",
-	"description": "A typescript template project for Phaser 3 using Parceljs",
+	"description": "phaser3 application of a small island, intending to build a portfolio site with it",
 	"scripts": {
 		"start": "parcel src/index.html -p 8000",
 		"build": "parcel build src/index.html --out-dir dist --no-minify --public-url ./",

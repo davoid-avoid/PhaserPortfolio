@@ -17,12 +17,6 @@ const findPath = (
     return [];
   }
 
-  // no path if select a wall
-  /*if (wallsLayer.getTileAt(target.x, target.y))
-	{
-		return []
-	}*/
-
   const queue: TilePosition[] = [];
   const parentForKey: {
     [key: string]: { key: string; position: TilePosition };

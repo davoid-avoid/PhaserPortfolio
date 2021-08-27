@@ -54,6 +54,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(character) {
+    this.setVelocity(0, 0);
     if (this.arrowDisabled === true) {
       let distance = Phaser.Math.Distance.Between(
         character.x,

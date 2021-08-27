@@ -2,6 +2,7 @@ import Phaser from "phaser";
 
 import Preloader from "./scenes/Preloader";
 import Portfolio from "./scenes/Portfolio";
+import { WarpPostFX } from './utils/warp.js';
 
 let config;
 
@@ -18,6 +19,7 @@ config = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
+  pipeline: [WarpPostFX],
   physics: {
     default: "arcade",
     arcade: {
@@ -48,6 +50,7 @@ config = {
         debug: false,
       },
     },
+    pipeline: [WarpPostFX],
     scene: [Preloader, Portfolio],
     debug: true,
   };

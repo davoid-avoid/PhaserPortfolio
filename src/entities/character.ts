@@ -43,7 +43,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    this.speed = 160;
+    this.speed = 140;
 
     //if any cursor key is down, interrupt pathfinding movement
     if (

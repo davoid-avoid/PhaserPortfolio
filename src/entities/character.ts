@@ -23,6 +23,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
   private movePath: Phaser.Math.Vector2[] = [];
   private moveToTarget?: Phaser.Math.Vector2;
+  private speed!: number;
 
   moveAlong(path: Phaser.Math.Vector2[]) {
     if (!path || path.length <= 0) {
@@ -42,7 +43,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    const speed = 120;
+    this.speed = 160;
 
     //if any cursor key is down, interrupt pathfinding movement
     if (
@@ -55,19 +56,19 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       if (modal?.style.display !== "inline-block") {
         if (cursors.left?.isDown) {
           this.anims.play("character-walk-left", true);
-          this.setVelocity(-speed, 0);
+          this.setVelocity(-this.speed, 0);
           this.moveToTarget = undefined;
         } else if (cursors.right?.isDown) {
           this.anims.play("character-walk-right", true);
-          this.setVelocity(speed, 0);
+          this.setVelocity(this.speed, 0);
           this.moveToTarget = undefined;
         } else if (cursors.down?.isDown) {
           this.anims.play("character-walk-down", true);
-          this.setVelocity(0, speed);
+          this.setVelocity(0, this.speed);
           this.moveToTarget = undefined;
         } else if (cursors.up?.isDown) {
           this.anims.play("character-walk-up", true);
-          this.setVelocity(0, -speed);
+          this.setVelocity(0, -this.speed);
           this.moveToTarget = undefined;
         }
       }
@@ -105,16 +106,16 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
       if (leftDown) {
         this.anims.play("character-walk-left", true);
-        this.setVelocity(-speed, 0);
+        this.setVelocity(-this.speed, 0);
       } else if (rightDown) {
         this.anims.play("character-walk-right", true);
-        this.setVelocity(speed, 0);
+        this.setVelocity(this.speed, 0);
       } else if (downDown) {
         this.anims.play("character-walk-down", true);
-        this.setVelocity(0, speed);
+        this.setVelocity(0, this.speed);
       } else if (upDown) {
         this.anims.play("character-walk-up", true);
-        this.setVelocity(0, -speed);
+        this.setVelocity(0, -this.speed);
       } else {
         this.anims.play("character-idle", true);
         this.setVelocity(0, 0);

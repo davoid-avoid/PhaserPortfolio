@@ -44,9 +44,9 @@ export default class Portfolio extends Phaser.Scene {
     createArrowAnims(this.anims);
 
     this.modalList = [
-      { name: "modal1", x: 920, y: 1310 },
-      { name: "modal2", x: 1960, y: 1870 },
-      { name: "modal3", x: 280, y: 1850 },
+      { name: "modal1", x: 920, y: 1310, tint: 0xADD8E6 },
+      { name: "modal2", x: 1960, y: 1870, tint: 0xFF8B3D },
+      { name: "modal3", x: 280, y: 1850, tint: 0x3CB043 },
     ];
 
     this.modalObject = [];
@@ -78,6 +78,7 @@ export default class Portfolio extends Phaser.Scene {
     }
     this.modalList.forEach((modal, index) => {
       this.modalObject.push(this.add.arrow(modal.x, modal.y, "arrowSprite"));
+      this.modalObject[index].tint = modal.tint
       this.modalObject[index].setModal(modal.name);
       this.physics.add.collider(this.character, this.modalObject[index], () =>
         this.modalObject[index].showModal()

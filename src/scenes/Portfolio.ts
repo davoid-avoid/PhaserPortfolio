@@ -80,6 +80,7 @@ export default class Portfolio extends Phaser.Scene {
       this.modalObject.push(this.add.arrow(modal.x, modal.y, "arrowSprite"));
       this.modalObject[index].tint = modal.tint
       this.modalObject[index].setModal(modal.name);
+      this.modalObject[index].body.setImmovable();
       this.physics.add.collider(this.character, this.modalObject[index], () =>
         this.modalObject[index].showModal()
       );

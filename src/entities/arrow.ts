@@ -42,6 +42,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
       this.alpha = 0;
       this.setVelocity(0, 0);
       this.body.setSize(0, 0);
+      this.body.setEnable(false);
       this.arrowDisabled = true;
     }
   }
@@ -51,6 +52,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
     this.alpha = 1;
     this.body.setSize(this.width * 0.55, this.height * 0.7);
     this.body.offset.y = 28;
+    this.body.setEnable(true);
   }
 
   update(character) {

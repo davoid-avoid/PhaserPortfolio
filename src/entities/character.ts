@@ -78,7 +78,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
       if (this.moveToTarget) {
         dx = this.moveToTarget.x - this.x;
-        dy = this.moveToTarget.y - this.y;
+        dy = this.moveToTarget.y - this.y - 20;
 
         if (Math.abs(dx) < 5) {
           dx = 0;
@@ -144,7 +144,7 @@ Phaser.GameObjects.GameObjectFactory.register(
     );
 
     sprite.body.setSize(sprite.width * 0.56, sprite.height * 0.4);
-    sprite.body.offset.y = 45;
+    sprite.body.offset.y = 55;
     sprite.body.offset.x = 16;
 
     return sprite;

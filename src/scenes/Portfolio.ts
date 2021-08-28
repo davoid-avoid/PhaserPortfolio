@@ -47,6 +47,7 @@ export default class Portfolio extends Phaser.Scene {
       { name: "modal1", x: 920, y: 1310, tint: 0xADD8E6 },
       { name: "modal2", x: 1960, y: 1870, tint: 0xFF8B3D },
       { name: "modal3", x: 280, y: 1850, tint: 0x3CB043 },
+      { name: "modal4", x: 3800, y: 2020, tint: 0xBE93D4 },
     ];
 
     this.modalObject = [];
@@ -69,7 +70,7 @@ export default class Portfolio extends Phaser.Scene {
     groundLayer.setCollisionByProperty({ collides: true });
 
     
-    //add in the player character //800, 800
+    //add in the player character //760, 800
     this.character = this.add.character(760, 800, "characterSprite");
 
     //debug the collisions on the ground if required

@@ -40,8 +40,8 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
       let modalDOM = document.getElementById("modal");
       modalDOM?.style.display = "inline-block";
       this.alpha = 0;
-      this.setVelocity(0, 0);
       this.body.setSize(0, 0);
+      this.disableBody();
       this.arrowDisabled = true;
 
       if (!selected.includes(tint)) {
@@ -50,6 +50,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
           uiLayer.scene.add.arrow((selected.length * this.width), 40, "arrowSprite"))
           .setInteractive();
         found.tint = tint;
+        found.body.setSize(0, 0);
         found.setModal(this.modalSet);
         found.anims.stop();
 

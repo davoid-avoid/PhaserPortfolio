@@ -29,22 +29,48 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
     this.arrowDisabled = false;
   }
 
-  showModal() {
+  showModal(selected, tint, game) {
     if (this.arrowDisabled === false) {
-      let modalContent = document.getElementsByClassName('modal-content')
-      Array.prototype.forEach.call(modalContent, function(el) {
-        el.style.display = "none"
-      })
-      let targetContent = document.getElementById(this.modalSet + '-content')
+      let modalContent = document.getElementsByClassName("modal-content");
+      Array.prototype.forEach.call(modalContent, function (el) {
+        el.style.display = "none";
+      });
+      let targetContent = document.getElementById(this.modalSet + "-content");
       targetContent?.style.display = "inline-block";
       let modalDOM = document.getElementById("modal");
       modalDOM?.style.display = "inline-block";
       this.alpha = 0;
       this.setVelocity(0, 0);
       this.body.setSize(0, 0);
-      this.body.setEnable(false);
       this.arrowDisabled = true;
+
+      if (!selected.includes(tint)) {
+        selected.push(tint);
+        let found = game.add
+          .arrow(selected.length * this.width, 40, "arrowSprite")
+          .setInteractive();
+        found.tint = tint;
+        found.setModal(this.modalSet);
+        found.anims.stop();
+
+        let self = this;
+
+        found.on("pointerdown", function () {
+          found.showModalUI(self.modalSet);
+        });
+      }
     }
+  }
+
+  showModalUI(name) {
+    let modalContent = document.getElementsByClassName("modal-content");
+    Array.prototype.forEach.call(modalContent, function (el) {
+      el.style.display = "none";
+    });
+    let targetContent = document.getElementById(name + "-content");
+    targetContent?.style.display = "inline-block";
+    let modalDOM = document.getElementById("modal");
+    modalDOM?.style.display = "inline-block";
   }
 
   resetArrow() {
@@ -52,7 +78,6 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
     this.alpha = 1;
     this.body.setSize(this.width * 0.55, this.height * 0.7);
     this.body.offset.y = 28;
-    this.body.setEnable(true);
   }
 
   update(character) {

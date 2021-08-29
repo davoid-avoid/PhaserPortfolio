@@ -45,6 +45,14 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.speed = 140;
 
+    let modal = document.getElementById("modal").style.display;
+
+    let paused = false;
+
+    if (modal === "inline-block") {
+      paused = true;
+    }
+
     //if any cursor key is down, interrupt pathfinding movement
     if (
       cursors.left?.isDown ||
@@ -52,8 +60,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       cursors.up?.isDown ||
       cursors.down?.isDown
     ) {
-      let modal = document.getElementById("modal");
-      if (modal?.style.display !== "inline-block") {
+      if (!paused) {
         if (cursors.left?.isDown) {
           this.anims.play("character-walk-left", true);
           this.setVelocity(-this.speed, 0);
@@ -73,50 +80,56 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         }
       }
     } else {
-      let dx = 0;
-      let dy = 0;
+      if (!paused) {
+        let dx = 0;
+        let dy = 0;
 
-      if (this.moveToTarget) {
-        dx = this.moveToTarget.x - this.x;
-        dy = this.moveToTarget.y - this.y - 20;
+        if (this.moveToTarget) {
+          dx = this.moveToTarget.x - this.x;
+          dy = this.moveToTarget.y - this.y - 20;
 
-        if (Math.abs(dx) < 5) {
-          dx = 0;
-        }
-        if (Math.abs(dy) < 5) {
-          dy = 0;
-        }
-
-        if (dx === 0 && dy === 0) {
-          if (this.movePath.length > 0) {
-            this.moveTo(this.movePath.shift()!);
-            return;
+          if (Math.abs(dx) < 5) {
+            dx = 0;
+          }
+          if (Math.abs(dy) < 5) {
+            dy = 0;
           }
 
-          this.moveToTarget = undefined;
+          if (dx === 0 && dy === 0) {
+            if (this.movePath.length > 0) {
+              this.moveTo(this.movePath.shift()!);
+              return;
+            }
+
+            this.moveToTarget = undefined;
+          }
         }
-      }
 
-      // this logic is the same except we determine
-      // if a key is down based on dx and dy
-      const leftDown = dx < 0;
-      const rightDown = dx > 0;
-      const upDown = dy < 0;
-      const downDown = dy > 0;
+        // this logic is the same except we determine
+        // if a key is down based on dx and dy
+        const leftDown = dx < 0;
+        const rightDown = dx > 0;
+        const upDown = dy < 0;
+        const downDown = dy > 0;
 
-      if (leftDown) {
-        this.anims.play("character-walk-left", true);
-        this.setVelocity(-this.speed, 0);
-      } else if (rightDown) {
-        this.anims.play("character-walk-right", true);
-        this.setVelocity(this.speed, 0);
-      } else if (downDown) {
-        this.anims.play("character-walk-down", true);
-        this.setVelocity(0, this.speed);
-      } else if (upDown) {
-        this.anims.play("character-walk-up", true);
-        this.setVelocity(0, -this.speed);
+        if (leftDown) {
+          this.anims.play("character-walk-left", true);
+          this.setVelocity(-this.speed, 0);
+        } else if (rightDown) {
+          this.anims.play("character-walk-right", true);
+          this.setVelocity(this.speed, 0);
+        } else if (downDown) {
+          this.anims.play("character-walk-down", true);
+          this.setVelocity(0, this.speed);
+        } else if (upDown) {
+          this.anims.play("character-walk-up", true);
+          this.setVelocity(0, -this.speed);
+        } else {
+          this.anims.play("character-idle", true);
+          this.setVelocity(0, 0);
+        }
       } else {
+        this.moveToTarget = undefined;
         this.anims.play("character-idle", true);
         this.setVelocity(0, 0);
       }

@@ -18,6 +18,8 @@ export default class Portfolio extends Phaser.Scene {
   private characterVert!: number;
   private modalList!: Array<object>;
   private modalObject!: Array<object>;
+  private modalsSelected!: Array<string>;
+  private uiLayer!: Array<object>;
 
   constructor() {
     super("portfolio");
@@ -51,6 +53,7 @@ export default class Portfolio extends Phaser.Scene {
     ];
 
     this.modalObject = [];
+    this.modalsSelected = [];
 
     //create the map, and pull in the tileset for the map
     const map = this.make.tilemap({ key: "tilemap" });
@@ -65,6 +68,9 @@ export default class Portfolio extends Phaser.Scene {
 
     //draw the animated sprites layer
     const waterLayer = map.createDynamicLayer("WaterTiles", tileset);
+
+    //layer of objects for drawing found modal gems
+    let uiLayer = []
 
     //set the collision map on the ground
     groundLayer.setCollisionByProperty({ collides: true });
@@ -83,7 +89,7 @@ export default class Portfolio extends Phaser.Scene {
       this.modalObject[index].setModal(modal.name);
       this.modalObject[index].body.setImmovable();
       this.physics.add.collider(this.character, this.modalObject[index], () =>
-        this.modalObject[index].showModal()
+        this.modalObject[index].showModal(this.modalsSelected, modal.tint, this)
       );
     }, this);
 
@@ -127,14 +133,27 @@ export default class Portfolio extends Phaser.Scene {
     pipelineInstance.setResizeMode(2);
     pipelineInstance.setProgress(0.1);
 
-    this.cameras.main.ignore(shaderLayer);
+    this.cameras.main.ignore(shaderLayer, uiLayer);
     camera2.ignore([
       this.character,
       groundLayer,
       waterLayer,
       treetopLayer,
-      this.modalObject
+      this.modalObject,
+      uiLayer
     ]);
+
+    let camera3 = this.cameras.add();
+    //camera3.startFollow(this.character);
+
+    camera3.ignore([
+      this.character,
+      groundLayer,
+      waterLayer,
+      treetopLayer,
+      this.modalObject,
+      shaderLayer
+    ])
   }
 
   update(t: number, dt: number) {

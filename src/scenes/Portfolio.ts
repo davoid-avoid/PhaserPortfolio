@@ -2,12 +2,14 @@ import Phaser, { Display, Tilemaps } from "phaser";
 import { debugDraw } from "../utils/debugCollide";
 import { createCharacterAnims } from "../entities/characterAnims";
 import { createArrowAnims } from "../entities/arrowAnims";
+import { createBirdAnims } from "../entities/birdAnims";
 import AnimatedTiles from "../utils/AnimatedTiles.js";
 import findPath from "../utils/findPath";
 import { WarpPostFX } from "../utils/warp.js";
 
 import "../entities/character";
 import "../entities/arrow";
+import "../entities/bird";
 
 export default class Portfolio extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -22,6 +24,7 @@ export default class Portfolio extends Phaser.Scene {
   private modalsSelected!: Array<string>;
   private uiLayer!: Array<object>;
   private cloudLayer!: any;
+  private birds!: Array<object>;
 
   constructor() {
     super("portfolio");
@@ -46,6 +49,8 @@ export default class Portfolio extends Phaser.Scene {
     createCharacterAnims(this.anims);
 
     createArrowAnims(this.anims);
+
+    createBirdAnims(this.anims);
 
     this.modalList = [
       { name: "modal1", x: 3320, y: 500, tint: 0xadd8e6 },
@@ -96,6 +101,13 @@ export default class Portfolio extends Phaser.Scene {
         this.modalObject[index].showModal(this.modalsSelected, modal.tint, this.uiLayer)
       );
     }, this);
+
+    this.birds = [];
+
+    for (var i = 0; i < 6; i++){
+    this.birds.push(this.add.bird(1950, 1200, "birdSprite"))
+    this.birds[i].setTriggered();
+    }
 
     //draw the tree top layer
     const treetopLayer = map.createStaticLayer("TreeTops", tileset);
@@ -148,7 +160,8 @@ export default class Portfolio extends Phaser.Scene {
       treetopLayer,
       this.modalObject,
       this.uiLayer,
-      this.cloudLayer
+      this.cloudLayer,
+      this.birds
     ]);
 
     let camera3 = this.cameras.add();
@@ -162,6 +175,7 @@ export default class Portfolio extends Phaser.Scene {
       this.modalObject,
       shaderLayer,
       this.cloudLayer,
+      this.birds
     ]);
   }
 
@@ -172,6 +186,9 @@ export default class Portfolio extends Phaser.Scene {
       this.modalObject.forEach((modal) => {
         modal.update(this.character);
       });
+      this.birds.forEach((bird) => {
+        bird.update(this.character)
+      })
     }
     this.t += this.tIncrement;
     if (this.character.y > this.characterVert) {

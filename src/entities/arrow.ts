@@ -29,7 +29,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
     this.arrowDisabled = false;
   }
 
-  showModal(selected, tint, game) {
+  showModal(selected, tint, uiLayer) {
     if (this.arrowDisabled === false) {
       let modalContent = document.getElementsByClassName("modal-content");
       Array.prototype.forEach.call(modalContent, function (el) {
@@ -45,9 +45,9 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
       this.arrowDisabled = true;
 
       if (!selected.includes(tint)) {
-        selected.push(tint);
-        let found = game.add
-          .arrow(selected.length * this.width, 40, "arrowSprite")
+        selected.push(tint)
+        let found = uiLayer.add(
+          uiLayer.scene.add.arrow((selected.length * this.width), 40, "arrowSprite"))
           .setInteractive();
         found.tint = tint;
         found.setModal(this.modalSet);
@@ -75,13 +75,13 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
 
   resetArrow() {
     this.arrowDisabled = false;
-    this.alpha = 1;
+    this.alpha = 0.5;
     this.body.setSize(this.width * 0.55, this.height * 0.7);
     this.body.offset.y = 28;
   }
 
   update(character) {
-    this.setVelocity(0, 0);
+    /*this.setVelocity(0, 0);
     if (this.arrowDisabled === true) {
       let distance = Phaser.Math.Distance.Between(
         character.x,
@@ -92,7 +92,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
       if (distance > 100) {
         this.resetArrow();
       }
-    }
+    }*/
   }
 }
 

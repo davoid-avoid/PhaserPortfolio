@@ -13,6 +13,7 @@ export default class Portfolio extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private character!: Phaser.Physics.Arcade.Sprite;
   private t!: number;
+  private t2!: number;
   private tIncrement!: number;
   private animatedTiles!: any;
   private characterVert!: number;
@@ -20,6 +21,7 @@ export default class Portfolio extends Phaser.Scene {
   private modalObject!: Array<object>;
   private modalsSelected!: Array<string>;
   private uiLayer!: Array<object>;
+  private cloudLayer!: any;
 
   constructor() {
     super("portfolio");
@@ -46,10 +48,10 @@ export default class Portfolio extends Phaser.Scene {
     createArrowAnims(this.anims);
 
     this.modalList = [
-      { name: "modal1", x: 920, y: 1310, tint: 0xADD8E6 },
-      { name: "modal2", x: 1960, y: 1870, tint: 0xFF8B3D },
-      { name: "modal3", x: 280, y: 1850, tint: 0x3CB043 },
-      { name: "modal4", x: 3800, y: 2020, tint: 0xBE93D4 },
+      { name: "modal1", x: 920, y: 1310, tint: 0xadd8e6 },
+      { name: "modal2", x: 1960, y: 1870, tint: 0xff8b3d },
+      { name: "modal3", x: 280, y: 1850, tint: 0x3cb043 },
+      { name: "modal4", x: 3800, y: 2020, tint: 0xbe93d4 },
     ];
 
     this.modalObject = [];
@@ -62,7 +64,10 @@ export default class Portfolio extends Phaser.Scene {
     //create the underwater layer
     const shaderLayer = map.createStaticLayer("shader1", tileset);
     shaderLayer.alpha = 0.1;
-    
+
+    this.cloudLayer = this.add.tileSprite(0, 0, 12000, 6000, "clouds");
+    this.cloudLayer.alpha = 0.2;
+
     //create the ground layer
     const groundLayer = map.createStaticLayer("GroundLayer", tileset);
 
@@ -70,12 +75,11 @@ export default class Portfolio extends Phaser.Scene {
     const waterLayer = map.createDynamicLayer("WaterTiles", tileset);
 
     //layer of objects for drawing found modal gems
-    let uiLayer = []
+    this.uiLayer = this.add.layer()
 
     //set the collision map on the ground
     groundLayer.setCollisionByProperty({ collides: true });
 
-    
     //add in the player character //760, 800
     this.character = this.add.character(760, 800, "characterSprite");
 
@@ -85,11 +89,11 @@ export default class Portfolio extends Phaser.Scene {
     }
     this.modalList.forEach((modal, index) => {
       this.modalObject.push(this.add.arrow(modal.x, modal.y, "arrowSprite"));
-      this.modalObject[index].tint = modal.tint
+      this.modalObject[index].tint = modal.tint;
       this.modalObject[index].setModal(modal.name);
       this.modalObject[index].body.setImmovable();
       this.physics.add.collider(this.character, this.modalObject[index], () =>
-        this.modalObject[index].showModal(this.modalsSelected, modal.tint, this)
+        this.modalObject[index].showModal(this.modalsSelected, modal.tint, this.uiLayer)
       );
     }, this);
 
@@ -99,8 +103,6 @@ export default class Portfolio extends Phaser.Scene {
     //initialize animations
     this.animatedTiles.init(map);
 
-    //start following the player
-    this.cameras.main.startFollow(this.character);
 
     //set collisions for player and ground layer
     this.physics.add.collider(this.character, groundLayer);
@@ -125,22 +127,28 @@ export default class Portfolio extends Phaser.Scene {
     );
 
     this.t = 0; // time variable for the distor shader
+    this.t2 = 0;
     this.tIncrement = 0.05;
+    let camera1 = this.cameras.main;
     let camera2 = this.cameras.add();
-    camera2.setPostPipeline(WarpPostFX);
+    camera1.setPostPipeline(WarpPostFX);
+    camera1.startFollow(this.character);
     camera2.startFollow(this.character);
-    var pipelineInstance = camera2.getPostPipeline(WarpPostFX);
+    var pipelineInstance = camera1.getPostPipeline(WarpPostFX);
     pipelineInstance.setResizeMode(2);
     pipelineInstance.setProgress(0.1);
 
-    this.cameras.main.ignore(shaderLayer, uiLayer);
-    camera2.ignore([
+    console.log(this.uiLayer)
+
+    camera2.ignore([shaderLayer, this.uiLayer]);
+    camera1.ignore([
       this.character,
       groundLayer,
       waterLayer,
       treetopLayer,
       this.modalObject,
-      uiLayer
+      this.uiLayer,
+      this.cloudLayer
     ]);
 
     let camera3 = this.cameras.add();
@@ -152,8 +160,9 @@ export default class Portfolio extends Phaser.Scene {
       waterLayer,
       treetopLayer,
       this.modalObject,
-      shaderLayer
-    ])
+      shaderLayer,
+      this.cloudLayer,
+    ]);
   }
 
   update(t: number, dt: number) {
@@ -162,17 +171,22 @@ export default class Portfolio extends Phaser.Scene {
       this.character.update(this.cursors);
       this.modalObject.forEach((modal) => {
         modal.update(this.character);
-      })
+      });
     }
     this.t += this.tIncrement;
     if (this.character.y > this.characterVert) {
-      this.t -= 0.25;
+      this.t -= 0.28;
     }
     if (this.character.y < this.characterVert) {
-      this.t += 0.25;
+      this.t += 0.28;
     }
     this.characterVert = this.character.y;
-    var pipelineInstance = this.cameras.cameras[1].getPostPipeline(WarpPostFX);
+    var pipelineInstance = this.cameras.cameras[0].getPostPipeline(WarpPostFX);
     pipelineInstance.setTime(this.t);
+
+    this.t2 += this.tIncrement;
+
+    this.cloudLayer.tilePositionX = this.t2 * 3;
+    this.cloudLayer.tilePositionY = this.t2 * 2;
   }
 }

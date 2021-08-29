@@ -43,7 +43,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    this.speed = 140;
+    this.speed = 160;
 
     let modal = document.getElementById("modal").style.display;
 

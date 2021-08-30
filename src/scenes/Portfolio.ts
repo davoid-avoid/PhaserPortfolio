@@ -25,6 +25,7 @@ export default class Portfolio extends Phaser.Scene {
   private uiLayer!: Array<object>;
   private cloudLayer!: any;
   private birds!: Array<object>;
+  private birdsList!: Array<object>;
 
   constructor() {
     super("portfolio");
@@ -59,6 +60,19 @@ export default class Portfolio extends Phaser.Scene {
       { name: "modal4", x: 3800, y: 2020, tint: 0xbe93d4 },
     ];
 
+    //list of birds to draw
+    this.birdsList = [
+      {
+        x: 1950, y: 1200, flockSize: 5
+      },
+      {
+        x: 3600, y: 1880, flockSize: 7
+      },
+      {
+        x: 700, y: 1700, flockSize: 6
+      },
+    ]
+
     this.modalObject = [];
     this.modalsSelected = [];
 
@@ -92,6 +106,8 @@ export default class Portfolio extends Phaser.Scene {
     if (debugDrawEnable) {
       debugDraw(groundLayer, this);
     }
+
+    //create modal gems
     this.modalList.forEach((modal, index) => {
       this.modalObject.push(this.add.arrow(modal.x, modal.y, "arrowSprite"));
       this.modalObject[index].tint = modal.tint;
@@ -102,12 +118,19 @@ export default class Portfolio extends Phaser.Scene {
       );
     }, this);
 
+    //create birds
     this.birds = [];
 
-    for (var i = 0; i < 6; i++){
-    this.birds.push(this.add.bird(1950, 1200, "birdSprite"))
-    this.birds[i].setTriggered();
-    }
+    this.birdsList.forEach((flock) => {
+      let flockSize = flock.flockSize
+      for (let i = 0; i < flockSize; i++){
+        console.log(flock.x, flock.y)
+        let targetBird = this.add.bird(flock.x, flock.y, "birdSprite")
+        targetBird.setTriggered();
+        this.birds.push(targetBird)
+        }
+    })
+
 
     //draw the tree top layer
     const treetopLayer = map.createStaticLayer("TreeTops", tileset);

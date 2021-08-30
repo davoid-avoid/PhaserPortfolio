@@ -71,6 +71,9 @@ export default class Portfolio extends Phaser.Scene {
       {
         x: 700, y: 1700, flockSize: 6
       },
+      {
+        x: 3250, y: 1300, flockSize: 8
+      },
     ]
 
     this.modalObject = [];
@@ -124,8 +127,8 @@ export default class Portfolio extends Phaser.Scene {
     this.birdsList.forEach((flock) => {
       let flockSize = flock.flockSize
       for (let i = 0; i < flockSize; i++){
-        console.log(flock.x, flock.y)
-        let targetBird = this.add.bird(flock.x, flock.y, "birdSprite")
+        let randomX = Phaser.Math.Between(-70, 70)
+        let targetBird = this.add.bird(flock.x + randomX, flock.y, "birdSprite")
         targetBird.setTriggered();
         this.birds.push(targetBird)
         }

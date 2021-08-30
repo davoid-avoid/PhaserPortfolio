@@ -17,7 +17,6 @@ export default class Bird extends Phaser.Physics.Arcade.Sprite {
     frame?: string | number
   ) {
     super(scene, x, y, texture, frame);
-
   }
 
   private triggered: Boolean;
@@ -28,7 +27,7 @@ export default class Bird extends Phaser.Physics.Arcade.Sprite {
     this.triggered = false;
     this.XSpeed = Phaser.Math.FloatBetween(-3, 3);
     this.YSpeed = Phaser.Math.FloatBetween(2, 4);
-    
+
     let random = Phaser.Math.Between(1, 2000);
     this.anims.playAfterDelay("bird", random);
     this.alpha = 0;
@@ -43,6 +42,7 @@ export default class Bird extends Phaser.Physics.Arcade.Sprite {
         this.y
       );
       if (distance < 250) {
+        this.alpha = 1;
         this.triggered = true;
       }
     } else {
@@ -51,7 +51,6 @@ export default class Bird extends Phaser.Physics.Arcade.Sprite {
   }
 
   flyBird() {
-    this.alpha = 1;
     this.x += this.XSpeed;
     this.y -= this.YSpeed;
   }

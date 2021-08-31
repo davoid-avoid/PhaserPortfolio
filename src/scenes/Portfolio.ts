@@ -20,13 +20,11 @@ export default class Portfolio extends Phaser.Scene {
   private tIncrement!: number;
   private animatedTiles!: any;
   private characterVert!: number;
-  private modalList!: Array<object>;
   private modalObject!: Array<object>;
   private modalsSelected!: Array<string>;
   private uiLayer!: Array<object>;
   private cloudLayer!: any;
   private birds!: Array<object>;
-  private birdsList!: Array<object>;
 
   constructor() {
     super("portfolio");

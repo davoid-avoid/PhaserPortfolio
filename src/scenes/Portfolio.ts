@@ -6,6 +6,7 @@ import { createBirdAnims } from "../entities/birdAnims";
 import AnimatedTiles from "../utils/AnimatedTiles.js";
 import findPath from "../utils/findPath";
 import { WarpPostFX } from "../utils/warp.js";
+import { birdsList, modalList } from "../configs/lists.js"
 
 import "../entities/character";
 import "../entities/arrow";
@@ -53,31 +54,15 @@ export default class Portfolio extends Phaser.Scene {
 
     createBirdAnims(this.anims);
 
-    this.modalList = [
-      { name: "modal1", x: 3320, y: 500, tint: 0xadd8e6 },
-      { name: "modal2", x: 1960, y: 1870, tint: 0xff8b3d },
-      { name: "modal3", x: 280, y: 1850, tint: 0x3cb043 },
-      { name: "modal4", x: 3800, y: 2020, tint: 0xbe93d4 },
-    ];
-
-    //list of birds to draw
-    this.birdsList = [
-      {
-        x: 1950, y: 1200, flockSize: 5
-      },
-      {
-        x: 3600, y: 1880, flockSize: 7
-      },
-      {
-        x: 700, y: 1700, flockSize: 6
-      },
-      {
-        x: 3250, y: 1300, flockSize: 8
-      },
-    ]
-
+    //create modal object listing, and selected modal listing
     this.modalObject = [];
     this.modalsSelected = [];
+
+    //create ignore listings for cameras
+    const camera1Ignore = [];
+    const camera2Ignore = [];
+    const camera3Ignore = [];
+
 
     //create the map, and pull in the tileset for the map
     const map = this.make.tilemap({ key: "tilemap" });
@@ -87,17 +72,32 @@ export default class Portfolio extends Phaser.Scene {
     const shaderLayer = map.createStaticLayer("shader1", tileset);
     shaderLayer.alpha = 0.1;
 
+    camera2Ignore.push(shaderLayer);
+    camera3Ignore.push(shaderLayer);
+
     this.cloudLayer = this.add.tileSprite(0, 0, 12000, 6000, "clouds");
     this.cloudLayer.alpha = 0.2;
+
+    camera1Ignore.push(this.cloudLayer);
+    camera3Ignore.push(this.cloudLayer)
 
     //create the ground layer
     const groundLayer = map.createStaticLayer("GroundLayer", tileset);
 
+    camera1Ignore.push(groundLayer);
+    camera3Ignore.push(groundLayer);
+
     //draw the animated sprites layer
     const waterLayer = map.createDynamicLayer("WaterTiles", tileset);
 
+    camera1Ignore.push(waterLayer);
+    camera3Ignore.push(waterLayer);
+
     //layer of objects for drawing found modal gems
     this.uiLayer = this.add.layer()
+
+    camera1Ignore.push(this.uiLayer);
+    camera2Ignore.push(this.uiLayer);
 
     //set the collision map on the ground
     groundLayer.setCollisionByProperty({ collides: true });
@@ -105,13 +105,16 @@ export default class Portfolio extends Phaser.Scene {
     //add in the player character //760, 800
     this.character = this.add.character(760, 800, "characterSprite");
 
+    camera1Ignore.push(this.character);
+    camera3Ignore.push(this.character);
+
     //debug the collisions on the ground if required
     if (debugDrawEnable) {
       debugDraw(groundLayer, this);
     }
 
     //create modal gems
-    this.modalList.forEach((modal, index) => {
+    modalList.forEach((modal, index) => {
       this.modalObject.push(this.add.arrow(modal.x, modal.y, "arrowSprite"));
       this.modalObject[index].tint = modal.tint;
       this.modalObject[index].setModal(modal.name);
@@ -121,10 +124,13 @@ export default class Portfolio extends Phaser.Scene {
       );
     }, this);
 
+    camera1Ignore.push(this.modalObject);
+    camera3Ignore.push(this.modalObject);
+
     //create birds
     this.birds = [];
 
-    this.birdsList.forEach((flock) => {
+    birdsList.forEach((flock) => {
       let flockSize = flock.flockSize
       for (let i = 0; i < flockSize; i++){
         let randomX = Phaser.Math.Between(-70, 70)
@@ -134,9 +140,15 @@ export default class Portfolio extends Phaser.Scene {
         }
     })
 
+    camera1Ignore.push(this.birds);
+    camera3Ignore.push(this.birds);
+
 
     //draw the tree top layer
     const treetopLayer = map.createStaticLayer("TreeTops", tileset);
+
+    camera1Ignore.push(treetopLayer);
+    camera3Ignore.push(treetopLayer);
 
     //initialize animations
     this.animatedTiles.init(map);
@@ -167,8 +179,9 @@ export default class Portfolio extends Phaser.Scene {
     this.t = 0; // time variable for the distor shader
     this.t2 = 0;
     this.tIncrement = 0.05;
-    let camera1 = this.cameras.main;
-    let camera2 = this.cameras.add();
+    let camera1 = this.cameras.main; //shader driven layer
+    let camera2 = this.cameras.add(); //most game objects
+    let camera3 = this.cameras.add(); //top ui layer - modal objects
     camera1.setPostPipeline(WarpPostFX);
     camera1.startFollow(this.character);
     camera2.startFollow(this.character);
@@ -176,33 +189,9 @@ export default class Portfolio extends Phaser.Scene {
     pipelineInstance.setResizeMode(2);
     pipelineInstance.setProgress(0.1);
 
-    console.log(this.uiLayer)
-
-    camera2.ignore([shaderLayer, this.uiLayer]);
-    camera1.ignore([
-      this.character,
-      groundLayer,
-      waterLayer,
-      treetopLayer,
-      this.modalObject,
-      this.uiLayer,
-      this.cloudLayer,
-      this.birds
-    ]);
-
-    let camera3 = this.cameras.add();
-    //camera3.startFollow(this.character);
-
-    camera3.ignore([
-      this.character,
-      groundLayer,
-      waterLayer,
-      treetopLayer,
-      this.modalObject,
-      shaderLayer,
-      this.cloudLayer,
-      this.birds
-    ]);
+    camera1.ignore(camera1Ignore);
+    camera2.ignore(camera2Ignore);
+    camera3.ignore(camera3Ignore);
   }
 
   update(t: number, dt: number) {

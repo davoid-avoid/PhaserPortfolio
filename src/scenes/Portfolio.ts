@@ -73,7 +73,7 @@ export default class Portfolio extends Phaser.Scene {
     camera2Ignore.push(shaderLayer);
     camera3Ignore.push(shaderLayer);
 
-    this.cloudLayer = this.add.tileSprite(0, 0, 12000, 6000, "clouds");
+    this.cloudLayer = this.add.tileSprite(0, 0, 16000, 6000, "clouds");
     this.cloudLayer.alpha = 0.2;
 
     camera1Ignore.push(this.cloudLayer);

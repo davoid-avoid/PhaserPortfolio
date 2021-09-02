@@ -23,7 +23,7 @@ const birdsList = [
 
 const modalList = [
   { name: "modal1", x: 3320, y: 500, tint: 0xadd8e6 },
-  { name: "modal2", x: 1960, y: 1870, tint: 0xff8b3d },
+  { name: "modal2", x: 6760, y: 1930, tint: 0xff8b3d },
   { name: "modal3", x: 280, y: 1850, tint: 0x3cb043 },
   { name: "modal4", x: 3800, y: 2020, tint: 0xbe93d4 },
 ];

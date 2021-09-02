@@ -19,6 +19,26 @@ const birdsList = [
     y: 1300,
     flockSize: 8,
   },
+  {
+    X: 4600,
+    y: 280,
+    flockSize: 3,
+  },
+  {
+    x: 4600,
+    y: 480,
+    flockSize: 3,
+  },
+  {
+    X: 4000,
+    y: 280,
+    flockSize: 2,
+  },
+  {
+    x: 4000,
+    y: 480,
+    flockSize: 4,
+  },
 ];
 
 const modalList = [

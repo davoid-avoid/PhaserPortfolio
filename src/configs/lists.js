@@ -20,24 +20,14 @@ const birdsList = [
     flockSize: 8,
   },
   {
-    X: 4600,
-    y: 280,
-    flockSize: 3,
-  },
-  {
     x: 4600,
     y: 480,
-    flockSize: 3,
-  },
-  {
-    X: 4000,
-    y: 280,
-    flockSize: 2,
+    flockSize: 12,
   },
   {
     x: 4000,
     y: 480,
-    flockSize: 4,
+    flockSize: 12,
   },
 ];
 
@@ -46,6 +36,26 @@ const modalList = [
   { name: "modal2", x: 6760, y: 1930, tint: 0xff8b3d },
   { name: "modal3", x: 280, y: 1850, tint: 0x3cb043 },
   { name: "modal4", x: 3800, y: 2020, tint: 0xbe93d4 },
+  //testing, putting all modal triggers near the final island
+  /*{ name: "modal1", x: 4102, y: 812, tint: 0xadd8e6 },
+  { name: "modal2", x: 4042, y: 812, tint: 0xff8b3d },
+  { name: "modal3", x: 3962, y: 812, tint: 0x3cb043 },
+  { name: "modal4", x: 3892, y: 812, tint: 0xbe93d4 },*/
 ];
 
-export { birdsList, modalList };
+const flameList = [
+  {
+    x: 4202, y: 896
+  },
+  {
+    x: 4442, y: 896
+  },
+  {
+    x: 4202, y: 736
+  },
+  {
+    x: 4442, y: 736
+  }
+]
+
+export { birdsList, modalList, flameList };

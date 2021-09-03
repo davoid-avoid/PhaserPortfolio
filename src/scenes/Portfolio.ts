@@ -3,14 +3,18 @@ import { debugDraw } from "../utils/debugCollide";
 import { createCharacterAnims } from "../entities/characterAnims";
 import { createArrowAnims } from "../entities/arrowAnims";
 import { createBirdAnims } from "../entities/birdAnims";
+import { createFlameAnims } from "../entities/flameAnims";
+import { createStarModalAnims } from "../entities/starAnims";
 import AnimatedTiles from "../utils/AnimatedTiles.js";
 import findPath from "../utils/findPath";
 import { WarpPostFX } from "../utils/warp.js";
-import { birdsList, modalList } from "../configs/lists.js"
+import { birdsList, modalList, flameList } from "../configs/lists.js";
 
 import "../entities/character";
 import "../entities/arrow";
 import "../entities/bird";
+import "../entities/flame";
+import "../entities/starModal";
 
 export default class Portfolio extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -20,12 +24,15 @@ export default class Portfolio extends Phaser.Scene {
   private tIncrement!: number;
   private animatedTiles!: any;
   private characterVert!: number;
-  private modalObject!: Array<object>;
+  private modalObject!: Array<Phaser.Physics.Arcade.Sprite>;
   private modalsSelected!: Array<string>;
   private uiLayer!: Array<object>;
+  private groundLayer!: any;
   private cloudLayer!: any;
-  private birds!: Array<object>;
-
+  private birds!: Array<Phaser.Physics.Arcade.Sprite>;
+  private flames!: Array<Phaser.Physics.Arcade.Sprite>;
+  private star!: Phaser.Physics.Arcade.Sprite;
+  private secret!: Boolean;
   constructor() {
     super("portfolio");
   }
@@ -52,15 +59,21 @@ export default class Portfolio extends Phaser.Scene {
 
     createBirdAnims(this.anims);
 
+    createFlameAnims(this.anims);
+
+    createStarModalAnims(this.anims);
+
     //create modal object listing, and selected modal listing
     this.modalObject = [];
     this.modalsSelected = [];
+
+    //secret passage
+    this.secret = false;
 
     //create ignore listings for cameras
     const camera1Ignore = [];
     const camera2Ignore = [];
     const camera3Ignore = [];
-
 
     //create the map, and pull in the tileset for the map
     const map = this.make.tilemap({ key: "tilemap" });
@@ -77,13 +90,13 @@ export default class Portfolio extends Phaser.Scene {
     this.cloudLayer.alpha = 0.2;
 
     camera1Ignore.push(this.cloudLayer);
-    camera3Ignore.push(this.cloudLayer)
+    camera3Ignore.push(this.cloudLayer);
 
     //create the ground layer
-    const groundLayer = map.createStaticLayer("GroundLayer", tileset);
+    this.groundLayer = map.createStaticLayer("GroundLayer", tileset);
 
-    camera1Ignore.push(groundLayer);
-    camera3Ignore.push(groundLayer);
+    camera1Ignore.push(this.groundLayer);
+    camera3Ignore.push(this.groundLayer);
 
     //draw the animated sprites layer
     const waterLayer = map.createDynamicLayer("WaterTiles", tileset);
@@ -92,13 +105,24 @@ export default class Portfolio extends Phaser.Scene {
     camera3Ignore.push(waterLayer);
 
     //layer of objects for drawing found modal gems
-    this.uiLayer = this.add.layer()
+    this.uiLayer = this.add.layer();
 
     camera1Ignore.push(this.uiLayer);
     camera2Ignore.push(this.uiLayer);
 
     //set the collision map on the ground
-    groundLayer.setCollisionByProperty({ collides: true });
+    this.groundLayer.setCollisionByProperty({ collides: true });
+
+    this.flames = [];
+
+    flameList.forEach((flame, index) => {
+      let targetFlame = this.add.flame(flame.x, flame.y, "flameSprite");
+      targetFlame.setIndex(index);
+      this.flames.push(targetFlame);
+    });
+
+    camera1Ignore.push(this.flames);
+    camera3Ignore.push(this.flames);
 
     //add in the player character //760, 800
     this.character = this.add.character(760, 800, "characterSprite");
@@ -108,7 +132,7 @@ export default class Portfolio extends Phaser.Scene {
 
     //debug the collisions on the ground if required
     if (debugDrawEnable) {
-      debugDraw(groundLayer, this);
+      debugDraw(this.groundLayer, this);
     }
 
     //create modal gems
@@ -118,29 +142,51 @@ export default class Portfolio extends Phaser.Scene {
       this.modalObject[index].setModal(modal.name);
       this.modalObject[index].body.setImmovable();
       this.physics.add.collider(this.character, this.modalObject[index], () =>
-        this.modalObject[index].showModal(this.modalsSelected, modal.tint, this.uiLayer)
+        this.modalObject[index].showModal(
+          this.modalsSelected,
+          modal.tint,
+          this.uiLayer
+        )
       );
     }, this);
 
     camera1Ignore.push(this.modalObject);
     camera3Ignore.push(this.modalObject);
 
+    //create Star
+    this.star = this.add.starModal(4316, 390, "starSprite")
+
+    this.star.tint = 0xffef00;
+    this.star.setStarModal("modal5");
+    this.star.body.setImmovable();
+    this.physics.add.collider(this.character, this.star, () =>
+    this.star.showModal()
+    )
+
+    
+    camera1Ignore.push(this.star);
+    camera3Ignore.push(this.star);
+
+
     //create birds
     this.birds = [];
 
     birdsList.forEach((flock) => {
-      let flockSize = flock.flockSize
-      for (let i = 0; i < flockSize; i++){
-        let randomX = Phaser.Math.Between(-70, 70)
-        let targetBird = this.add.bird(flock.x + randomX, flock.y, "birdSprite")
+      let flockSize = flock.flockSize;
+      for (let i = 0; i < flockSize; i++) {
+        let randomX = Phaser.Math.Between(-70, 70);
+        let targetBird = this.add.bird(
+          flock.x + randomX,
+          flock.y,
+          "birdSprite"
+        );
         targetBird.setTriggered();
-        this.birds.push(targetBird)
-        }
-    })
+        this.birds.push(targetBird);
+      }
+    });
 
     camera1Ignore.push(this.birds);
     camera3Ignore.push(this.birds);
-
 
     //draw the tree top layer
     const treetopLayer = map.createStaticLayer("TreeTops", tileset);
@@ -151,23 +197,22 @@ export default class Portfolio extends Phaser.Scene {
     //initialize animations
     this.animatedTiles.init(map);
 
-
     //set collisions for player and ground layer
-    this.physics.add.collider(this.character, groundLayer);
+    this.physics.add.collider(this.character, this.groundLayer);
 
     this.input.on(
       Phaser.Input.Events.POINTER_UP,
       (pointer: Phaser.Input.Pointer) => {
         const { worldX, worldY } = pointer;
 
-        const startVec = groundLayer.worldToTileXY(
+        const startVec = this.groundLayer.worldToTileXY(
           this.character.body.x,
           this.character.body.y
         );
-        const targetVec = groundLayer.worldToTileXY(worldX, worldY);
+        const targetVec = this.groundLayer.worldToTileXY(worldX, worldY);
 
         // generate the path
-        const path = findPath(startVec, targetVec, groundLayer);
+        const path = findPath(startVec, targetVec, this.groundLayer);
 
         // give it to the player to use
         this.character.moveAlong(path);
@@ -200,8 +245,12 @@ export default class Portfolio extends Phaser.Scene {
         modal.update(this.character);
       });
       this.birds.forEach((bird) => {
-        bird.update(this.character)
-      })
+        bird.update(this.character);
+      });
+      this.flames.forEach((flame) => {
+        flame.update(this.modalsSelected);
+      });
+      this.star.update(this.character);
     }
     this.t += this.tIncrement;
     if (this.character.y > this.characterVert) {
@@ -218,5 +267,25 @@ export default class Portfolio extends Phaser.Scene {
 
     this.cloudLayer.tilePositionX = this.t2 * 3;
     this.cloudLayer.tilePositionY = this.t2 * 2;
+    if (
+      this.secret === false &&
+      this.modalsSelected.length === modalList.length
+    ) {
+      this.secret = true;
+      this.groundLayer.layer.data.forEach((layer) => {
+        layer.forEach((tile) => {
+          if (tile.index === 170) {
+            tile.index = 18;
+            tile.properties.collides = false;
+            tile.setCollision(false);
+          }
+          if (tile.index === 169) {
+            tile.index = 18;
+            tile.properties.collides = false;
+            tile.setCollision(false);
+          }
+        });
+      });
+    }
   }
 }

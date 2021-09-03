@@ -17,6 +17,10 @@ export default class Bird extends Phaser.Physics.Arcade.Sprite {
     frame?: string | number
   ) {
     super(scene, x, y, texture, frame);
+
+    this.triggered = false;
+    this.XSpeed = 0;
+    this.YSpeed = 0;
   }
 
   private triggered: Boolean;

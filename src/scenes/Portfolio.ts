@@ -235,7 +235,22 @@ export default class Portfolio extends Phaser.Scene {
     camera1.ignore(camera1Ignore);
     camera2.ignore(camera2Ignore);
     camera3.ignore(camera3Ignore);
+
+    showModal('modal0');
+
+    function showModal(modal){
+      let modalContent = document.getElementsByClassName("modal-content");
+        Array.prototype.forEach.call(modalContent, function (el) {
+          el.style.display = "none";
+        });
+        let targetContent = document.getElementById(modal + "-content");
+        targetContent?.style.display = "inline-block";
+        let modalDOM = document.getElementById("modal");
+        modalDOM?.style.display = "inline-block";
+    }
   }
+
+
 
   update(t: number, dt: number) {
     //if character exists, update the character each frame

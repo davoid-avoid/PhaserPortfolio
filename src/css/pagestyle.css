@@ -43,3 +43,13 @@ canvas {
     text-decoration: none;
     cursor: pointer;
   }
+
+button {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    border: 0px solid black;
+    cursor: pointer;
+}

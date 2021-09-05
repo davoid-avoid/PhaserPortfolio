@@ -17,7 +17,7 @@ export default class Preloader extends Phaser.Scene {
       offsetRatioMobileRect = 0;
     } else {
       wRatio = 30;
-      offsetRatio = 100;
+      offsetRatio = window.innerWidth / 4;
       offsetRatioText = window.innerWidth / 2;
       offsetRatioMobileRect = 140;
     }
@@ -76,24 +76,29 @@ export default class Preloader extends Phaser.Scene {
 
     let self = this;
     this.load.on("complete", function () {
-      console.log("complete");
-      /*text1.text = "LOAD COMPLETE";
-      let flashes = 0;
-      let flashInterval = setInterval(function () {
-        text1.alpha = !text1.alpha;
-        flashes++;
-        if (flashes > 16) {
-          self.scene.start("portfolio");
-          clearInterval(flashInterval);
-          text1.destroy();
-          progressBars.forEach((bar) => {
+        console.log("complete");
+        text1.text = "LOAD COMPLETE";
+        let flashes = 0;
+        let flashInterval = setInterval(function () {
+          text1.alpha = !text1.alpha;
+          flashes++;
+          if (flashes > 17) {
+            text1.text = "BEGINNING PROGRAM";
+            setTimeout(function () {
+              self.scene.start("portfolio");
+            }, 200);
+            clearInterval(flashInterval);
+            //text1.destroy();
+            /*progressBars.forEach((bar) => {
             bar.destroy();
-          });
-        }
-      }, 100);*/
+          });*/
+          }
+        }, 100);
     });
   }
   create() {
-    this.scene.start("portfolio");
+    if (window.innerWidth <= 400) {
+      //this.scene.start("portfolio");
+    }
   }
 }

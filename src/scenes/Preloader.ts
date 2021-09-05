@@ -77,23 +77,23 @@ export default class Preloader extends Phaser.Scene {
     let self = this;
     this.load.on("complete", function () {
       console.log("complete");
-      text1.text = "LOAD COMPLETE";
+      /*text1.text = "LOAD COMPLETE";
       let flashes = 0;
       let flashInterval = setInterval(function () {
         text1.alpha = !text1.alpha;
         flashes++;
         if (flashes > 16) {
+          self.scene.start("portfolio");
           clearInterval(flashInterval);
           text1.destroy();
           progressBars.forEach((bar) => {
             bar.destroy();
           });
-          self.scene.start("portfolio");
         }
-      }, 100);
+      }, 100);*/
     });
   }
   create() {
-    //this.scene.start("portfolio");
+    this.scene.start("portfolio");
   }
 }

@@ -27,6 +27,12 @@ export default class Preloader extends Phaser.Scene {
       color: "#ff6600",
       fontSize: 30,
     });
+    const text2 = this.add.text(wRatio, 680, "src//SR", {
+        fontFamily: "Helvetica",
+        fontStyle: "bold",
+        color: "#ff6600",
+        fontSize: 16,
+      });
     let progressBars = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 3; j++) {
@@ -71,12 +77,14 @@ export default class Preloader extends Phaser.Scene {
     });
 
     this.load.on("fileprogress", function (file) {
-      console.log(file.src);
+      console.log(file.src.shuffle());
+      text2.text = file.src.shuffle();
     });
 
     let self = this;
     this.load.on("complete", function () {
         console.log("complete");
+        text2.text = ""
         text1.text = "LOAD COMPLETE";
         let flashes = 0;
         let flashInterval = setInterval(function () {
@@ -95,6 +103,7 @@ export default class Preloader extends Phaser.Scene {
           }
         }, 100);
     });
+
   }
   create() {
     if (window.innerWidth <= 400) {

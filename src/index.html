@@ -5,21 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
+    <script>
+      // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+      let vh = window.innerHeight * 0.01;
+      // Then we set the value in the --vh custom property to the root of the document
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+
+      String.prototype.shuffle = function () {
+        var a = this.split(""),
+          n = a.length;
+
+        for (var i = n - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = a[i];
+          a[i] = a[j];
+          a[j] = tmp;
+        }
+        return a.join("");
+      };
+    </script>
     <script src="main.ts"></script>
     <div id="modal">
       <div id="modal-interior">
         <span class="close" onClick="closeModal()">&times;</span>
-        <div id="modal0-content" class="modal-content" style="width: 100%; text-align: center;">
+        <div
+          id="modal0-content"
+          class="modal-content"
+          style="width: 100%; text-align: center"
+        >
           <h1>Welcome!</h1>
           <p>
-            Welcome to the portfolio site of David Rowe, a web developer in Toronto, Ontario, Canada.
+            Welcome to the portfolio site of David Rowe, a web developer in
+            Toronto, Ontario, Canada.
           </p>
-          <p>This site is meant to be an interactive portfolio, so, you will be asked to engage with it and explore to find out more.</p>
-          <p>Use the arrow keys, or tap/click on the screen to explore. Find floating triangles to find out more.</p>
+          <p>
+            This site is meant to be an interactive portfolio, so, you will be
+            asked to engage with it and explore to find out more.
+          </p>
+          <p>
+            Use the arrow keys, or tap/click on the screen to explore. Find
+            floating triangles to find out more.
+          </p>
           <p>Find all 4 triangles for a surprise!</p>
           <center><button onClick="closeModal()">Dismiss</button></center>
-          <p>Altneratively, if you do not wish to engage with this portfolio, the same information can be found by clicking the button below:</p>
-          <center><button onClick="closeModal()">Under Construction</button></center>
+          <p>
+            Altneratively, if you do not wish to engage with this portfolio, the
+            same information can be found by clicking the button below:
+          </p>
+          <center>
+            <button onClick="closeModal()">Under Construction</button>
+          </center>
         </div>
         <div id="modal1-content" class="modal-content">
           <h1>Modal 1</h1>

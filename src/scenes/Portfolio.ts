@@ -5,6 +5,7 @@ import { createArrowAnims } from "../entities/arrowAnims";
 import { createBirdAnims } from "../entities/birdAnims";
 import { createFlameAnims } from "../entities/flameAnims";
 import { createStarModalAnims } from "../entities/starAnims";
+import { createInfoModalAnims } from "../entities/infoAnims";
 import AnimatedTiles from "../utils/AnimatedTiles.js";
 import findPath from "../utils/findPath";
 import { WarpPostFX } from "../utils/warp.js";
@@ -15,6 +16,7 @@ import "../entities/arrow";
 import "../entities/bird";
 import "../entities/flame";
 import "../entities/starModal";
+import "../entities/infoModal";
 
 export default class Portfolio extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -62,6 +64,8 @@ export default class Portfolio extends Phaser.Scene {
     createFlameAnims(this.anims);
 
     createStarModalAnims(this.anims);
+
+    createInfoModalAnims(this.anims);
 
     //create modal object listing, and selected modal listing
     this.modalObject = [];
@@ -167,6 +171,17 @@ export default class Portfolio extends Phaser.Scene {
     camera1Ignore.push(this.star);
     camera3Ignore.push(this.star);
 
+    let info = this.uiLayer.add(this.add.infoModal(this.game.config.width - 80, 45, "infoSprite")).setInteractive();
+    info.setInfoModal('modal0');
+
+    info.on("pointerdown", function () {
+      console.log('clicked info')
+      info.showModal();
+    });
+
+    console.log(info)
+
+
 
     //create birds
     this.birds = [];
@@ -247,6 +262,7 @@ export default class Portfolio extends Phaser.Scene {
         targetContent?.style.display = "inline-block";
         let modalDOM = document.getElementById("modal");
         modalDOM?.style.display = "inline-block";
+        document.getElementById("modal-interior").scrollTop = 0;
     }
   }
 

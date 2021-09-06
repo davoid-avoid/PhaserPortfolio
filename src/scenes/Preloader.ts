@@ -67,6 +67,7 @@ export default class Preloader extends Phaser.Scene {
     this.load.atlas("birdSprite", "sprites/bird.png", "sprites/bird.json");
     this.load.atlas("flameSprite", "sprites/flame.png", "sprites/flame.json");
     this.load.atlas("starSprite", "sprites/star.png", "sprites/star.json");
+    this.load.atlas("infoSprite", "sprites/info.png", "sprites/info.json");
 
     this.load.on("progress", function (value) {
       progressBars.forEach((bar) => {
@@ -91,7 +92,7 @@ export default class Preloader extends Phaser.Scene {
           text1.alpha = !text1.alpha;
           flashes++;
           if (flashes > 17) {
-            text1.text = "BEGINNING PROGRAM";
+            text1.text = "INITIALIZING PROGRAM";
             setTimeout(function () {
               self.scene.start("portfolio");
             }, 200);

@@ -39,6 +39,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
       targetContent?.style.display = "inline-block";
       let modalDOM = document.getElementById("modal");
       modalDOM?.style.display = "inline-block";
+      document.getElementById("modal-interior").scrollTop = 0;
       this.alpha = 0;
       this.body.setSize(0, 0);
       this.disableBody();

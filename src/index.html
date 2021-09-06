@@ -12,6 +12,11 @@
   </head>
   <body>
     <script>
+      // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+      let vh = window.innerHeight * 0.01;
+      // Then we set the value in the --vh custom property to the root of the document
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+
       String.prototype.shuffle = function () {
         var a = this.split(""),
           n = a.length;
@@ -47,8 +52,8 @@
             Use the arrow keys, or tap/click on the screen to explore. Find
             floating triangles to find out more.
           </p>
-          <img src="../public/images/instruct1.png"/>
-          <img src="../public/images/instruct2.png"/>
+          <img src="../public/images/instruct1.png" />
+          <img src="../public/images/instruct2.png" />
           <p>Find all 4 triangles for a surprise!</p>
           <center><button onClick="closeModal()">Dismiss</button></center>
           <p>
@@ -98,23 +103,61 @@
           </p>
         </div>
         <div id="modal3-content" class="modal-content">
-          <h1>Modal 3</h1>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-            qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut labore et dolore
-            magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-            nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut
-            aliquid ex ea commodi consequatur? Quis autem vel eum iure
-            reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-            consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla
-            pariatur?
-          </p>
+          <h1>Technology</h1>
+          <p>Front End:</p>
+          <ul>
+            <li>Vue framework (v2 and v3 composition API)</li>
+            <li>Vuex and Nuxt experience</li>
+            <li>AngularJS framework</li>
+            <li>Aurelia framework</li>
+            <li>Ember framework</li>
+            <li>HTML/HTML5 and CSS/CSS3</li>
+            <li>Templating engines such as Handlebars, Mustache and Gulp</li>
+            <li>Axios</li>
+            <li>PhaserJS (v2, some experimentation with v3)</li>
+            <li>D3js(v3 and v4)</li>
+            <li>ThreeJS</li>
+            <li>MelonJS</li>
+            <li>WebXR and WebAR</li>
+            <li>PlayCanvas engine</li>
+            <li>SVG and Canvas animation</li>
+            <li>Lowlag and Howler</li>
+            <li>PixiJS</li>
+            <li>ModelViewerJS</li>
+            <li>Electron</li>
+          </ul>
+          <p>Back End:</p>
+          <ul>
+            <li>
+              NodeJS (project API’s, data parsing and sanitization tools, and
+              notably an application which leveraged NodeJS and Selenium to
+              crawl internal web projects, screenshot them, and then produce
+              weekly visual regression reports)
+            </li>
+            <li>NestJS framework</li>
+            <li>mSQL and PostGreSQL</li>
+            <li>Axios with Firebase and Firestore deployments</li>
+            <li>Microsoft Azure deployments</li>
+            <li>Coldfusion 9 and 10 templating and project maintenance</li>
+          </ul>
+          <p>Other:</p>
+          <ul>
+            <li>Unity Game Engine (C#)</li>
+            <li>GameMaker (GMScript)</li>
+            <li>Articulate Storyline and Articulate Rise</li>
+            <li>Adobe Captivate</li>
+            <li>SCORM API and Tin Can (xAPI)</li>
+            <li>Python (V2 + V3)</li>
+            <li>Raspberry Pi and Arduino kits</li>
+            <li>Blender</li>
+            <li>Adobe Suite (Photoshop, Illustrator, After Effects, XD)</li>
+            <li>Audacity and Pro Tools</li>
+            <li>
+              Dev Ops; maintaining and troubleshooting build pipelines, internal
+              gitlab, and IIS
+            </li>
+            <li>Mentored Junior Developers in the above technologies</li>
+          </ul>
         </div>
         <div id="modal4-content" class="modal-content">
           <h1>Modal 4</h1>

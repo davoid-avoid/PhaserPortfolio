@@ -28,11 +28,11 @@ export default class Preloader extends Phaser.Scene {
       fontSize: 30,
     });
     const text2 = this.add.text(wRatio, 680, "src//SR", {
-        fontFamily: "Helvetica",
-        fontStyle: "bold",
-        color: "#ff6600",
-        fontSize: 16,
-      });
+      fontFamily: "Helvetica",
+      fontStyle: "bold",
+      color: "#ff6600",
+      fontSize: 16,
+    });
     let progressBars = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 3; j++) {
@@ -84,27 +84,26 @@ export default class Preloader extends Phaser.Scene {
 
     let self = this;
     this.load.on("complete", function () {
-        console.log("complete");
-        text2.text = ""
-        text1.text = "LOAD COMPLETE";
-        let flashes = 0;
-        let flashInterval = setInterval(function () {
-          text1.alpha = !text1.alpha;
-          flashes++;
-          if (flashes > 17) {
-            text1.text = "INITIALIZING PROGRAM";
-            setTimeout(function () {
-              self.scene.start("portfolio");
-            }, 200);
-            clearInterval(flashInterval);
-            //text1.destroy();
-            /*progressBars.forEach((bar) => {
+      console.log("complete");
+      text2.text = "";
+      text1.text = "LOAD COMPLETE";
+      let flashes = 0;
+      let flashInterval = setInterval(function () {
+        text1.alpha = !text1.alpha;
+        flashes++;
+        if (flashes > 17) {
+          text1.text = "INITIALIZING PROGRAM";
+          setTimeout(function () {
+            self.scene.start("portfolio");
+          }, 200);
+          clearInterval(flashInterval);
+          //text1.destroy();
+          /*progressBars.forEach((bar) => {
             bar.destroy();
           });*/
-          }
-        }, 100);
+        }
+      }, 100);
     });
-
   }
   create() {
     if (window.innerWidth <= 400) {

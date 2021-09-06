@@ -1,4 +1,4 @@
-import Phaser, { Display, Tilemaps } from "phaser";
+import Phaser, { Display, Scene, Tilemaps } from "phaser";
 import { debugDraw } from "../utils/debugCollide";
 import { createCharacterAnims } from "../entities/characterAnims";
 import { createArrowAnims } from "../entities/arrowAnims";
@@ -28,7 +28,7 @@ export default class Portfolio extends Phaser.Scene {
   private characterVert!: number;
   private modalObject!: Array<Phaser.Physics.Arcade.Sprite>;
   private modalsSelected!: Array<string>;
-  private uiLayer!: Array<object>;
+  private uiLayer!: Phaser.GameObjects.Layer;
   private groundLayer!: any;
   private cloudLayer!: any;
   private birds!: Array<Phaser.Physics.Arcade.Sprite>;
@@ -75,16 +75,16 @@ export default class Portfolio extends Phaser.Scene {
     this.secret = false;
 
     //create ignore listings for cameras
-    const camera1Ignore = [];
-    const camera2Ignore = [];
-    const camera3Ignore = [];
+    const camera1Ignore: any[] = [];
+    const camera2Ignore: any[] = [];
+    const camera3Ignore: any[] = [];
 
     //create the map, and pull in the tileset for the map
     const map = this.make.tilemap({ key: "tilemap" });
     const tileset = map.addTilesetImage("tileset", "tiles", 80, 80, 1, 2);
 
     //create the underwater layer
-    const shaderLayer = map.createStaticLayer("shader1", tileset);
+    const shaderLayer = map.createLayer("shader1", tileset);
     shaderLayer.alpha = 0.1;
 
     camera2Ignore.push(shaderLayer);
@@ -97,13 +97,13 @@ export default class Portfolio extends Phaser.Scene {
     camera3Ignore.push(this.cloudLayer);
 
     //create the ground layer
-    this.groundLayer = map.createStaticLayer("GroundLayer", tileset);
+    this.groundLayer = map.createLayer("GroundLayer", tileset);
 
     camera1Ignore.push(this.groundLayer);
     camera3Ignore.push(this.groundLayer);
 
     //draw the animated sprites layer
-    const waterLayer = map.createDynamicLayer("WaterTiles", tileset);
+    const waterLayer = map.createLayer("WaterTiles", tileset);
 
     camera1Ignore.push(waterLayer);
     camera3Ignore.push(waterLayer);
@@ -171,7 +171,7 @@ export default class Portfolio extends Phaser.Scene {
     camera1Ignore.push(this.star);
     camera3Ignore.push(this.star);
 
-    let info = this.uiLayer.add(this.add.infoModal(this.game.config.width - 80, 45, "infoSprite")).setInteractive();
+    let info = this.uiLayer.add(this.add.infoModal(<number>this.game.config.width - 80, 45, "infoSprite")).setInteractive();
     info.setInfoModal('modal0');
 
     info.on("pointerdown", function () {
@@ -204,7 +204,7 @@ export default class Portfolio extends Phaser.Scene {
     camera3Ignore.push(this.birds);
 
     //draw the tree top layer
-    const treetopLayer = map.createStaticLayer("TreeTops", tileset);
+    const treetopLayer = map.createLayer("TreeTops", tileset);
 
     camera1Ignore.push(treetopLayer);
     camera3Ignore.push(treetopLayer);
@@ -244,8 +244,8 @@ export default class Portfolio extends Phaser.Scene {
     camera1.startFollow(this.character);
     camera2.startFollow(this.character);
     var pipelineInstance = camera1.getPostPipeline(WarpPostFX);
-    pipelineInstance.setResizeMode(2);
-    pipelineInstance.setProgress(0.1);
+    //pipelineInstance.setResizeMode(2);
+    //pipelineInstance.setProgress(0.1);
 
     camera1.ignore(camera1Ignore);
     camera2.ignore(camera2Ignore);
@@ -262,7 +262,7 @@ export default class Portfolio extends Phaser.Scene {
         targetContent?.style.display = "inline-block";
         let modalDOM = document.getElementById("modal");
         modalDOM?.style.display = "inline-block";
-        document.getElementById("modal-interior").scrollTop = 0;
+        <number>document?.getElementById("modal-interior")?.scrollTop = 0;
     }
   }
 

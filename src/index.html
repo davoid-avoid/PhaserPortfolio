@@ -17,6 +17,13 @@
       // Then we set the value in the --vh custom property to the root of the document
       document.documentElement.style.setProperty("--vh", `${vh}px`);
 
+      // We listen to the resize event
+      window.addEventListener("resize", () => {
+        // We execute the same script as before
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      });
+
       String.prototype.shuffle = function () {
         var a = this.split(""),
           n = a.length;
@@ -65,22 +72,38 @@
           </center>
         </div>
         <div id="modal1-content" class="modal-content">
-          <h1>Modal 1</h1>
+          <h1>About Me</h1>
           <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-            qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-            sed quia non numquam eius modi tempora incidunt ut labore et dolore
-            magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-            nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut
-            aliquid ex ea commodi consequatur? Quis autem vel eum iure
-            reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-            consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla
-            pariatur?
+            I am currently a front-end focused developer with back end
+            experience who initially entered the discipline working on a home
+            grown LMS system and platform. I am passionate about the use of
+            interactive assets, games and designs in order to help facilitate
+            the teaching of complex subject matter (the primary focus of the
+            platform in question was sciences, focusing on biology).
+          </p>
+          <p>
+            I have found myself throughout my career in situations where I would
+            have to learn new technologies quickly on a project by project
+            basis, and consider my greatest strength to be adaptability and the
+            ability to troubleshoot or debug unexpected behaviours. I hope to
+            draw from these experiences to provide value in being able to
+            quickly adopt tech stacks as required, and to help in solving issues
+            if they arise.
+          </p>
+          <p>
+            I also helped initialize, acted as production lead and then moved
+            into a technical support role for the e-Learning division of my
+            current company, where I put together a team of e-learning designers
+            and developers, mentored in SCORM API and xAPI, and taught the use
+            of and solved for extended features with Articulate Storyline.
+          </p>
+
+          <p>
+            I also have adopted many technologies for rich interactive web
+            experiences, such as the Phaser game engine(v3), PlayCanvas engine,
+            MelonJS, and have worked with rendering technologies such as PixiJS
+            and ThreeJS. I am passionate about good game design and providing an
+            interesting and engaging experience to users.
           </p>
         </div>
         <div id="modal2-content" class="modal-content">
@@ -106,7 +129,7 @@
           <h1>Technology</h1>
           <p>Front End:</p>
           <ul>
-            <li>Vue framework (v2 and v3 composition API)</li>
+            <li>Vue framework</li>
             <li>Vuex and Nuxt experience</li>
             <li>AngularJS framework</li>
             <li>Aurelia framework</li>
@@ -114,8 +137,8 @@
             <li>HTML/HTML5 and CSS/CSS3</li>
             <li>Templating engines such as Handlebars, Mustache and Gulp</li>
             <li>Axios</li>
-            <li>PhaserJS (v2, some experimentation with v3)</li>
-            <li>D3js(v3 and v4)</li>
+            <li>PhaserJS</li>
+            <li>D3js</li>
             <li>ThreeJS</li>
             <li>MelonJS</li>
             <li>WebXR and WebAR</li>
@@ -129,7 +152,7 @@
           <p>Back End:</p>
           <ul>
             <li>
-              NodeJS (project API’s, data parsing and sanitization tools, and
+              NodeJS (project API's, data parsing and sanitization tools, and
               notably an application which leveraged NodeJS and Selenium to
               crawl internal web projects, screenshot them, and then produce
               weekly visual regression reports)
@@ -147,16 +170,11 @@
             <li>Articulate Storyline and Articulate Rise</li>
             <li>Adobe Captivate</li>
             <li>SCORM API and Tin Can (xAPI)</li>
-            <li>Python (V2 + V3)</li>
+            <li>Python</li>
             <li>Raspberry Pi and Arduino kits</li>
             <li>Blender</li>
             <li>Adobe Suite (Photoshop, Illustrator, After Effects, XD)</li>
             <li>Audacity and Pro Tools</li>
-            <li>
-              Dev Ops; maintaining and troubleshooting build pipelines, internal
-              gitlab, and IIS
-            </li>
-            <li>Mentored Junior Developers in the above technologies</li>
           </ul>
         </div>
         <div id="modal4-content" class="modal-content">

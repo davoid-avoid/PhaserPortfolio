@@ -129,7 +129,7 @@ export default class Portfolio extends Phaser.Scene {
     camera3Ignore.push(this.flames);
 
     //add in the player character //760, 800
-    this.character = this.add.character(760, 800, "characterSprite");
+    this.character = this.add.character(880, 820, "characterSprite");
 
     camera1Ignore.push(this.character);
     camera3Ignore.push(this.character);

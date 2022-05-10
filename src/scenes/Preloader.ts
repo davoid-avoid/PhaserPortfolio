@@ -54,7 +54,7 @@ export default class Preloader extends Phaser.Scene {
         progressBars.push(progressBox);
       }
     }
-    this.load.image("tiles", "tiles/tilemaplargeextrudetest.png");
+    this.load.image("tiles", "tiles/tilemaplargeextrude.png");
     this.load.image("clouds", "tiles/clouds.png");
     this.load.tilemapTiledJSON("tilemap", "tiles/tilemap.json");
 
@@ -68,6 +68,9 @@ export default class Preloader extends Phaser.Scene {
     this.load.atlas("flameSprite", "sprites/flame.png", "sprites/flame.json");
     this.load.atlas("starSprite", "sprites/star.png", "sprites/star.json");
     this.load.atlas("infoSprite", "sprites/info.png", "sprites/info.json");
+    this.load.atlas("audioSprite", "sprites/audio.png", "sprites/audio.json");
+
+    this.load.audio("music", "audio/city-ruins.mp3")
 
     this.load.on("progress", function (value) {
       progressBars.forEach((bar) => {

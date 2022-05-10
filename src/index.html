@@ -62,7 +62,7 @@
           <img src="../public/images/instruct1.png" />
           <img src="../public/images/instruct2.png" />
           <p>Find all 4 triangles for a surprise!</p>
-          <center><button onClick="closeModal()">Dismiss</button></center>
+          <center><button onClick="closeModal('start')">Dismiss</button></center>
           <p>
             Altneratively, if you do not wish to engage with this portfolio, the
             same information can be found by clicking the button below:
@@ -219,9 +219,15 @@
     </div>
   </body>
   <script>
-    function closeModal() {
+    let playing = false
+    function closeModal(param) {
       let modalDOM = document.getElementById("modal");
       modalDOM.style.display = "none";
+      if (param === 'start' && playing === false) { 
+        playing = true;
+        const event = new Event('closedStart');
+        window.dispatchEvent(event)
+      }
     }
   </script>
 </html>

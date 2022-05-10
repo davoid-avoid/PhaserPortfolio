@@ -6,6 +6,7 @@ import { createBirdAnims } from "../entities/birdAnims";
 import { createFlameAnims } from "../entities/flameAnims";
 import { createStarModalAnims } from "../entities/starAnims";
 import { createInfoModalAnims } from "../entities/infoAnims";
+import { createAudioIconAnims } from "../entities/audioAnims";
 import AnimatedTiles from "../utils/AnimatedTiles.js";
 import findPath from "../utils/findPath";
 import { WarpPostFX } from "../utils/warp.js";
@@ -17,6 +18,7 @@ import "../entities/bird";
 import "../entities/flame";
 import "../entities/starModal";
 import "../entities/infoModal";
+import "../entities/audio";
 
 export default class Portfolio extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -66,6 +68,8 @@ export default class Portfolio extends Phaser.Scene {
     createStarModalAnims(this.anims);
 
     createInfoModalAnims(this.anims);
+    
+    createAudioIconAnims(this.anims);
 
     //create modal object listing, and selected modal listing
     this.modalObject = [];
@@ -171,6 +175,23 @@ export default class Portfolio extends Phaser.Scene {
     camera1Ignore.push(this.star);
     camera3Ignore.push(this.star);
 
+    let audioConf = {
+      mute: false,
+      volume: 1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    }
+    let music = this.sound.add("music", audioConf);
+
+    let self = this
+    window.addEventListener('closedStart', function() {
+      music.play()
+    })
+
+
     let info = this.uiLayer.add(this.add.infoModal(<number>this.game.config.width - 80, 45, "infoSprite")).setInteractive();
     info.setInfoModal('modal0');
 
@@ -179,7 +200,18 @@ export default class Portfolio extends Phaser.Scene {
       info.showModal();
     });
 
-    console.log(info)
+    let audioUIIcon = this.uiLayer.add(this.add.audioIcon(<number>this.game.config.width - 160, 45, "audioSprite")).setInteractive();
+    //info.setInfoModal('modal0');
+
+    audioUIIcon.on("pointerdown", function () {
+      console.log('clicked info2')
+      if (music.isPlaying) {
+        music.pause()
+      } else if (music.isPaused) {
+        music.resume()
+      }
+      audioUIIcon.setAudioState(music.isPlaying)
+    });
 
 
 

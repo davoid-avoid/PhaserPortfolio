@@ -17,7 +17,7 @@ export default class InfoModal extends Phaser.Physics.Arcade.Sprite {
     frame?: string | number
   ) {
     super(scene, x, y, texture, frame);
-
+    console.log(this.anims)
     this.anims.play("info");
 
     this.infoDisabled = false;
